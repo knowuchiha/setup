@@ -1,6 +1,6 @@
 import React, { useEffect }  from 'react';
 import { connect }           from 'react-redux';
-import { addNumber }         from '../redux/actions/increment';
+import { addNumber }         from '../../redux/actions/increment';
 
 const Body = (props) => {
 	const { addNumber, count }  = props;

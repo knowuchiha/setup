@@ -1,12 +1,15 @@
-import React   from 'react';
-import Body    from './components/body';
+import React      from 'react';
+import Landing    from './pages/landing/index.js';
+
+//import 'styles/parent.css';
 
 const App = () => {
+
 	return(
 		<div>
-			<Body/>
+			<Landing/>
 		</div>
-		);
+	);
 };
 
 export default App;
