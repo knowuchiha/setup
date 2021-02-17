@@ -1,10 +1,9 @@
-import { combineReducers }    from  'redux';
-import increment              from  './increment.js';
+import { combineReducers } from 'redux';
 
-const reducer = combineReducers(
-	{
-		increment: increment,
-	}
-)
+import Filter           from './filter';
 
-export default reducer;
+const rootReducer = combineReducers ({
+	filter       : Filter,
+});
+
+export default rootReducer;

@@ -1,58 +1,56 @@
-import React, { useEffect, useState }  from 'react';
+import React, { useEffect, 
+	useState }               from 'react';
 import { connect }           from 'react-redux';
-import Button                from '@material-ui/core/Button';
-import InputLabel            from '@material-ui/core/InputLabel';
-import MenuItem              from '@material-ui/core/MenuItem';
-import FormControl           from '@material-ui/core/FormControl';
-import Select                from '@material-ui/core/Select';
+import {dropDown}            from '../../apis/dropDown';
+import Loader                from '../../components/loader';
+import { setData }           from '../../redux/actions/filter';
+import { Grid }              from '@material-ui/core';
+
+import DropDown              from './molecules/dropDown';
+import SearchButton          from './molecules/searchButton';
+import ExchangeRate          from './molecules/exchangeRate';
+
 
 import '../../styles/landing.css';
 
 const Body = (props) => {
 
-	const [curr, setCurr] = useState('');
-var obj = [
-	{'symbol' : 'INR', 'curr' : 'Indian Rupee (INR)'},
-	{'symbol' : 'AUD', 'curr' : 'Australian Dollar (AUD)'},
-	{'symbol' : 'CAD', 'curr' : 'Canadian Dollar (CAD)'},
-	{'symbol' : 'JPY', 'curr' : 'Japanese Yen (JPY)'},
-]
+	const { setData } = props;
+
+	const [ loading, setLoading ] = useState(true);
+
+	const getData = async() =>{
+		setLoading(true);
+
+		try {
+			let data = await dropDown();
+			setData(data);
+		}
+		catch(err){
+			console.log(err);
+		}
+		setLoading(false);
+	}
 
 	useEffect(()=>{
+		getData();
 	},[])
 
-	const handleClick = async () => {
-		let url = `https://api.exchangeratesapi.io/latest?base=${curr}`; 
-		const exchangeFetched = await fetch(url);
-		const data = await exchangeFetched.json();
-		console.log('=====================',data);
-	}
-
-	const handleChange = (e) => {
-		console.log('=====================');
-		setCurr(e.target.value);
-	}
+	 if (loading)
+        return <Loader/>;
 
 	return(
-		<div>
-			<FormControl variant="outlined" className = 'landing-form'>
-				<Select className = 'landing-form-select' 
-					value={curr}
-					onChange={handleChange}
-				>
-					{
-					obj.map((row,i)=>(
-						<MenuItem key = {i} value= {row.symbol}>{row.curr}</MenuItem>
-						))
-					}
-				</Select>
-			</FormControl>
-			<p>
-				<Button variant="contained" size = "large" color="primary" onClick = {handleClick}>
-					Search
-				</Button>
-			</p>
-		</div>
+		<Grid container spacing = { 2 }>
+			<Grid item xs = { 11 } align = 'center'>
+				<DropDown/>
+			</Grid>
+			<Grid item xs = { 11 } align = 'center'>
+				<SearchButton/>
+			</Grid>
+			<Grid item xs = { 12 } align = 'center'>
+				<ExchangeRate/>
+			</Grid>
+		</Grid>
 		);
 }
 
@@ -63,6 +61,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
 	return {
+		setData : data => dispatch (setData (data)),
 	};
 }
 

@@ -1,0 +1,52 @@
+#!/usr/bin/env node
+
+const config                    = require ('../common/config');
+const mongoose                  = require ('../common/db');
+
+const { mongo_url }             = config;
+let	model                       = require ('../model/dropDown');
+let	collectionName              = 'dropDown';
+
+
+var data = [
+    {'symbol' : 'INR', 'dropDown' : 'Indian Rupee (INR)'},
+    {'symbol' : 'AUD', 'dropDown' : 'Australian Dollar (AUD)'},
+    {'symbol' : 'CAD', 'dropDown' : 'Canadian Dollar (CAD)'},
+    {'symbol' : 'JPY', 'dropDown' : 'Japanese Yen (JPY)'},
+]
+
+
+let saveToMongo = async () => {
+
+	for (let row of data) {
+		try {
+			await model.create (getData (row));
+		}
+		catch (err) {
+			console.log(err);
+		}
+	}
+};
+
+
+function getData (line) {
+	return { symbol: line.symbol, dropDown : line.dropDown };
+}
+
+
+async function init () {
+	try {
+		/* Making connection with mongodb */
+		await mongoose.init (mongo_url);
+
+		await saveToMongo ();
+		console.log('data sucessfully added to mongo');
+		process.exit (0);
+	}
+	catch (err) {
+		console.log({ err : err }, 'migration failed');
+		process.exit (1);
+	}
+}
+
+init ();
