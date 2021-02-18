@@ -4,7 +4,7 @@ export const dropDown = async () => {
 
 	try {
 
-		let response = await fetch(`http://${hostname}/apis/dropDown`);
+		let response = await fetch(`https://${hostname}/apis/dropDown`);
 
 		const data = await response.json();
 
