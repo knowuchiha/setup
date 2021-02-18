@@ -2,7 +2,5 @@ scripts/setup/tmp/*
 node_modules
 *.swp
 *.swo
-*.swn
-
 
 ~        
