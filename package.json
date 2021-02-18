@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
 	"heroku-prebuild":"npm install",
 	"start" : "node app.js",
-	"heroku-postbuild":"npm install ./reactapps && npm run build ./rectapps"
+	"heroku-postbuild":"npm install ./reactapps && npm run build ./reactapps"
   },
   "author": "",
   "license": "ISC",
