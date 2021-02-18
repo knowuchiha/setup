@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
 	"heroku-prebuild":"npm install",
-	"heroku-postbuild":"npm install ./reactapps && npm run build ./reactapps",
+	"heroku-postbuild":"npm install ./app/reactapps && npm run build ./app/reactapps",
 	"start" : "node app.js"
   },
   "author": "",
