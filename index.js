@@ -6,10 +6,10 @@ const apis = require ('./routes/apis');
 
 app.get('/apis/*',apis);
 
-app.use(express.static("/reactapps/build"));
+app.use(express.static("./reactapps/build"));
 
 app.use('/',(req, res) => {
-	return res.sendFile(path.join('/reactapps/build', 'index.html'));
+	return res.sendFile(path.join('./reactapps/build', 'index.html'));
 });
 
 app.use('/ping', (req,res) => res.send('pong'));
